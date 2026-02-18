@@ -3,6 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { InjectDataSource, TypeOrmModule } from '@nestjs/typeorm';
 import { databaseConfig } from './config/database.config';
 import { DataSource } from 'typeorm';
+import { UsersModule } from './modules/users/user.module';
+import { RoleModule } from './modules/role/role.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -13,6 +16,9 @@ import { DataSource } from 'typeorm';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => databaseConfig(config),
     }),
+    UsersModule,
+    RoleModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
