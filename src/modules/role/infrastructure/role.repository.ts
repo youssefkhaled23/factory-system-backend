@@ -23,4 +23,18 @@ export class RoleRepository extends Repository<Role> {
       return null;
     }
   }
+
+  async getAllRoles(): Promise<Role[]> {
+    try {
+      const roles = await this.find();
+      return roles;
+    } catch (error: unknown) {
+      this.logger.error(
+        'Failed to retrieve all roles',
+        error instanceof Error ? error.stack : String(error),
+      );
+
+      return [];
+    }
+  }
 }

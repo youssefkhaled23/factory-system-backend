@@ -16,6 +16,8 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { deleteFile } from 'src/utils/file.util';
 import { RolesEnum, UserStatusEnum } from 'src/common/enums/enums';
 import { UpdateUserPasswordDto } from '../dto/update-user-password.dto';
+import { UserQueryDto } from '../dto/user-query.dto';
+import { PaginatedResult } from 'src/interfaces/pagination.interfaces';
 
 @Injectable()
 export class UsersServices {
@@ -26,6 +28,19 @@ export class UsersServices {
     private readonly roleRepository: RoleRepository,
     private readonly hashingService: HashingServices,
   ) {}
+
+  async getAllUsers(query: UserQueryDto): Promise<PaginatedResult<User>> {
+    this.logger.log('Fetching all users');
+    try {
+      const { pagination, results } =
+        await this.usersRepository.getAllUsers(query);
+      this.logger.log(`Fetched ${results.length} users successfully`);
+      return { pagination, results };
+    } catch (error) {
+      this.logger.error('Failed to fetch users', error.stack);
+      throw error;
+    }
+  }
 
   async createUser(data: CreateUserDto): Promise<User> {
     this.logger.log(`Creating user with email: ${data.email}`);

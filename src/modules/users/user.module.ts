@@ -6,11 +6,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/infrastructure/database/entities/user.entity';
 import { RoleModule } from '../role/role.module';
 import { HashingServices } from 'src/shared/services/hashing.service';
-
+import { PaginationService } from 'src/shared/services/pagination.service';
 @Module({
   imports: [TypeOrmModule.forFeature([User]), RoleModule],
   controllers: [UsersController],
-  providers: [UsersServices, UsersRepository, HashingServices],
+  providers: [
+    UsersServices,
+    UsersRepository,
+    HashingServices,
+    PaginationService,
+  ],
   exports: [TypeOrmModule, UsersRepository],
 })
 export class UsersModule {}

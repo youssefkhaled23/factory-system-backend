@@ -2,9 +2,11 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseGuards,
 } from '@nestjs/common';
@@ -15,6 +17,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 import { UserStatusEnum } from 'src/common/enums/enums';
 import { AuthGuard } from 'src/common/guards/auth.guards';
+import { UserQueryDto } from './dto/user-query.dto';
 
 @Controller({
   path: 'users',
@@ -23,6 +26,19 @@ import { AuthGuard } from 'src/common/guards/auth.guards';
 @UseGuards(AuthGuard)
 export class UsersController {
   constructor(private readonly usersServices: UsersServices) {}
+
+  @Get()
+  async getAllUsers(@Query() query: UserQueryDto) {
+    const { pagination, results } = await this.usersServices.getAllUsers(query);
+    return {
+      status: true,
+      message: 'تم جلب المستخدمين بنجاح',
+      data: {
+        results,
+        pagination,
+      },
+    };
+  }
 
   @Post('add')
   @UploadFile({
