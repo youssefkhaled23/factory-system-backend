@@ -33,6 +33,9 @@ export class User {
   })
   status: UserStatusEnum;
 
+  @Column({ type: 'varchar', nullable: true })
+  avatar: string;
+
   @Column({ type: 'timestamp', nullable: true })
   last_login: Date | null;
 

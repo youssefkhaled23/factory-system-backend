@@ -5,11 +5,12 @@ import { UsersRepository } from './infrastructure/user.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/infrastructure/database/entities/user.entity';
 import { RoleModule } from '../role/role.module';
+import { HashingServices } from 'src/shared/services/hashing.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), RoleModule],
   controllers: [UsersController],
-  providers: [UsersServices, UsersRepository],
+  providers: [UsersServices, UsersRepository, HashingServices],
   exports: [TypeOrmModule, UsersRepository],
 })
 export class UsersModule {}
