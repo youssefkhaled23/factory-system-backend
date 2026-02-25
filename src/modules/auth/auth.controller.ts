@@ -51,6 +51,7 @@ export class AuthController {
 
   @Post('refresh-token')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'User Refresh Token' })
   async refresh(@Body() data: RefreshTokenDto) {
     const { refreshToken, token } = await this.authService.refreshToken(data);

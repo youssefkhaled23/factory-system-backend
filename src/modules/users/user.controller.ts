@@ -25,7 +25,9 @@ import { UserQueryDto } from './dto/user-query.dto';
 })
 @UseGuards(AuthGuard)
 export class UsersController {
-  constructor(private readonly usersServices: UsersServices) {}
+  constructor(
+    private readonly usersServices: UsersServices,
+  ) { }
 
   @Get()
   async getAllUsers(@Query() query: UserQueryDto) {

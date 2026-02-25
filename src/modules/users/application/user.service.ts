@@ -210,10 +210,6 @@ export class UsersServices {
       );
     }
 
-    if (existingUser.status !== UserStatusEnum.ACTIVE) {
-      throw new BadRequestException('لا يمكن تحديث حالة مستخدم غير نشط');
-    }
-
     try {
       existingUser.status = status;
       const updatedUser = await this.usersRepository.updateUser(existingUser);
